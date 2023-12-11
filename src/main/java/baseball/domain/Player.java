@@ -52,5 +52,12 @@ public class Player {
     public String strikeCountToString() {
         return StrikeCount + "스트라이크";
     }
+
+    public boolean continueGame() {
+        if (StrikeCount == 3) {
+            return false;
+        }
+        return true;
+    }
 }
 

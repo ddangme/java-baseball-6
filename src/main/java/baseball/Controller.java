@@ -1,5 +1,6 @@
 package baseball;
 
+import baseball.constants.StatusValue;
 import baseball.domain.Player;
 import baseball.service.*;
 import baseball.util.RandomUtil;
@@ -10,15 +11,22 @@ public class Controller {
 
     OutputService outputService = new OutputService();
     InputService inputService = new InputService();
-    GameService gameService = new GameService();
+    GameService gameService;
     ValidationService validationService = new ValidationService();
     ParseService parseService = new ParseService();
 
     public void run() {
         outputService.printGameStartMessage();
+        while (newGame());
+    }
+
+    public boolean newGame() {
+        gameService = new GameService();
         setComputerNumber();
-        Player player = getPlayer();
-        showGameResult(player);
+        while (calculateResult());
+
+        outputService.printGameEndMessage();
+        return getContinue();
     }
 
     public void setComputerNumber() {
@@ -27,15 +35,21 @@ public class Controller {
         System.out.println(randoms);
     }
 
-    public Player getPlayer() {
+    public boolean calculateResult() {
         String inputNumbers = inputService.getThreeNumbers();
         List<Integer> numbers = parseService.toIntegerList(inputNumbers);
-        validationService.validationThreeNumbers(numbers);
-        return new Player(numbers);
-    }
-
-    public void showGameResult(Player player) {
+        validationService.validateThreeNumbers(numbers);
+        Player player = new Player(numbers);
         gameService.calculateResult(player);
         outputService.printBallAndStrikeCountMessage(player);
+
+        return player.continueGame();
     }
+
+    private boolean getContinue() {
+        String inputNumber = inputService.getNumber();
+        StatusValue.validate(inputNumber);
+        return StatusValue.getStatus(inputNumber);
+    }
+
 }
