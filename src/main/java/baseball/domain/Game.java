@@ -2,18 +2,35 @@ package baseball.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
-public class Lotto {
+public class Game {
     private List<Integer> randomNumbers = new ArrayList<>();
 
-    public Lotto(List<Integer> randoms) {
+    public Game(List<Integer> randoms) {
         this.randomNumbers = randoms;
     }
 
     public int getStrikeCount(List<Integer> userNumbers) {
-        return (int) IntStream.range(0, Math.min(userNumbers.size(), randomNumbers.size()))
-                .filter(i -> userNumbers.get(i).equals(randomNumbers.get(i)))
-                .count();
+        int count = 0;
+
+        for (int i = 0; i < randomNumbers.size(); i++) {
+            if (userNumbers.get(i).equals(randomNumbers.get(i))) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public int getBallCount(List<Integer> userNumbers) {
+        int count = 0;
+
+        for (int i = 0; i < randomNumbers.size(); i++) {
+            if (randomNumbers.contains(userNumbers.get(i)) && randomNumbers.indexOf(userNumbers.get(i)) != i) {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

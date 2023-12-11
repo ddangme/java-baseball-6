@@ -1,6 +1,6 @@
 package baseball.service;
 
-import baseball.constants.LottoRange;
+import baseball.constants.BallRange;
 
 import java.util.HashSet;
 import java.util.List;
@@ -15,14 +15,14 @@ public class ValidationService {
     }
 
     private void checkSize(List<Integer> numbers) {
-        if (numbers.size() != LottoRange.LOTTO_SIZE) {
+        if (numbers.size() != BallRange.LOTTO_SIZE) {
             throw new IllegalArgumentException("3자리의 숫자로 입력해주세요.");
         }
     }
 
     private void checkRange(List<Integer> numbers) {
         for (Integer number : numbers) {
-            if (number < LottoRange.START_NUMBER || number > LottoRange.END_NUMBER) {
+            if (number < BallRange.START_NUMBER || number > BallRange.END_NUMBER) {
                 throw new IllegalArgumentException("1에서 9사이의 숫자로 입력해주세요.");
             }
         }
@@ -31,7 +31,7 @@ public class ValidationService {
     private void checkDuplicate(List<Integer> numbers) {
         Set<Integer> deduplicateNumbers = new HashSet<>(numbers);
 
-        if (deduplicateNumbers.size() != LottoRange.LOTTO_SIZE) {
+        if (deduplicateNumbers.size() != BallRange.LOTTO_SIZE) {
             throw new IllegalArgumentException("중복된 숫자가 존재합니다.");
         }
     }

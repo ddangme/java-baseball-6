@@ -1,28 +1,30 @@
 package baseball.service;
 
-import baseball.constants.LottoRange;
-import baseball.domain.Lotto;
+import baseball.domain.Game;
+import baseball.domain.Player;
 
 import java.util.List;
 
-public class LottoService {
+public class GameService {
 
-    private Lotto lotto;
+    private Game game;
 
     public void setLotto(List<Integer> numbers) {
-        Lotto lotto = new Lotto(numbers);
+        this.game = new Game(numbers);
     }
 
-    public void calculateLotto(List<Integer> userNumbers) {
-
+    public void calculateResult(Player player) {
+        calculateBallCount(player);
+        calculateStrikeCount(player);
     }
 
-    private void getStrikeCount(List<Integer> userNumbers) {
-        int strikeCount = 0;
-
-        for (int i = 0; i < LottoRange.LOTTO_SIZE; i++) {
-            if (userNumbers.get(i).equals(lotto))
-        }
+    private void calculateBallCount(Player player) {
+        int ballCount = game.getBallCount(player.getPlayerNumbers());
+        player.setBallCount(ballCount);
     }
 
+    private void calculateStrikeCount(Player player) {
+        int strikeCount = game.getStrikeCount(player.getPlayerNumbers());
+        player.setStrikeCount(strikeCount);
+    }
 }

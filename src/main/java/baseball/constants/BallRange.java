@@ -1,6 +1,6 @@
 package baseball.constants;
 
-public class LottoRange {
+public class BallRange {
     public static int START_NUMBER = 0;
     public static int END_NUMBER = 9;
 

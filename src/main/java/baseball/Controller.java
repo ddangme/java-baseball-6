@@ -1,5 +1,6 @@
 package baseball;
 
+import baseball.domain.Player;
 import baseball.service.*;
 import baseball.util.RandomUtil;
 
@@ -9,24 +10,32 @@ public class Controller {
 
     OutputService outputService = new OutputService();
     InputService inputService = new InputService();
-    LottoService lottoService = new LottoService();
+    GameService gameService = new GameService();
     ValidationService validationService = new ValidationService();
     ParseService parseService = new ParseService();
 
     public void run() {
         outputService.printGameStartMessage();
-        setLotto();
+        setComputerNumber();
+        Player player = getPlayer();
+        showGameResult(player);
     }
 
-    public void setLotto() {
+    public void setComputerNumber() {
         List<Integer> randoms = RandomUtil.pickRandomThreeNumber();
-        lottoService.setLotto(randoms);
+        gameService.setLotto(randoms);
+        System.out.println(randoms);
     }
 
-    public void setThreeNumbers() {
+    public Player getPlayer() {
         String inputNumbers = inputService.getThreeNumbers();
         List<Integer> numbers = parseService.toIntegerList(inputNumbers);
         validationService.validationThreeNumbers(numbers);
+        return new Player(numbers);
+    }
 
+    public void showGameResult(Player player) {
+        gameService.calculateResult(player);
+        outputService.printBallAndStrikeCountMessage(player);
     }
 }
