@@ -38,7 +38,7 @@ public class Controller {
     public boolean calculateResult() {
         String inputNumbers = inputService.getThreeNumbers();
         List<Integer> numbers = parseService.toIntegerList(inputNumbers);
-        validationService.validateThreeNumbers(numbers);
+        validationService.validatePlayerNumbers(numbers);
         Player player = new Player(numbers);
         gameService.calculateResult(player);
         outputService.printBallAndStrikeCountMessage(player);

@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class ValidationService {
 
-    public void validateThreeNumbers(List<Integer> numbers) {
+    public void validatePlayerNumbers(List<Integer> numbers) {
         checkSize(numbers);
         checkRange(numbers);
         checkDuplicate(numbers);
