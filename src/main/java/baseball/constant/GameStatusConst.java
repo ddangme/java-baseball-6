@@ -3,13 +3,15 @@ package baseball.constant;
 import java.util.Arrays;
 
 public enum GameStatusConst {
-    GAME_CONTINUE(1),
-    GAME_STOP(2);
+    GAME_CONTINUE(1, true),
+    GAME_STOP(2, false);
 
     private int status;
+    private boolean run;
 
-    GameStatusConst(int status) {
+    GameStatusConst(int status, boolean run) {
         this.status = status;
+        this.run = run;
     }
 
     public static GameStatusConst getGameStatus(int status) {
@@ -21,6 +23,10 @@ public enum GameStatusConst {
 
     public int getStatus() {
         return status;
+    }
+
+    public boolean gameContinue() {
+        return run;
     }
 
 

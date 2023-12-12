@@ -16,8 +16,8 @@ public class Game {
 
     public int getStrikeCount(List<Integer> userNumbers) {
         return (int) IntStream.range(0, userNumbers.size())
-            .filter(i -> userNumbers.get(i).equals(gameNumbers.get(i)))
-            .count();
+                .filter(i -> userNumbers.get(i).equals(gameNumbers.get(i)))
+                .count();
     }
 
     public int getBallCount(List<Integer> userNumbers) {

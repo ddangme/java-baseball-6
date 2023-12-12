@@ -1,5 +1,6 @@
 package baseball;
 
+import baseball.constant.GameStatusConst;
 import baseball.domain.Game;
 import baseball.domain.Hint;
 import baseball.service.GameService;
@@ -18,13 +19,19 @@ public class Controller {
 
     public void run() {
         outputService.printGameStartMessage();
-        Game newGame = gameService.createNewGame();
-        playGame(newGame);
 
+        boolean gameContinue = true;
+
+        while (gameContinue) {
+            Game newGame = gameService.createNewGame();
+            playGame(newGame);
+            gameContinue = getGameStatus();
+        }
     }
 
     private void playGame(Game game) {
         boolean status = true;
+
         while (status) {
             List<Integer> userNumbers = getUserNumbers();
             Hint hint = gameService.getHint(userNumbers);
@@ -32,6 +39,8 @@ public class Controller {
 
             status = hint.isLose();
         }
+
+        outputService.printGameWinMessage();
     }
 
     private List<Integer> getUserNumbers() {
@@ -40,13 +49,27 @@ public class Controller {
         while (userNumbers == null) {
             try {
                 String inputUserNumber = inputService.getUserNumber();
-                userNumbers = processorService.inputNumberParseToIntegerList(inputUserNumber);
+                userNumbers = processorService.stringParseToIntegerList(inputUserNumber);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
 
         return userNumbers;
+    }
+
+    private boolean getGameStatus() {
+        while (true) {
+            try {
+                String inputGameStatus = inputService.getGameStatus();
+                GameStatusConst gameStatusConst = processorService.stringParseToGameStatus(inputGameStatus);
+
+                return gameStatusConst.gameContinue();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
 
 }
