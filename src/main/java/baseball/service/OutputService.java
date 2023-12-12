@@ -1,6 +1,8 @@
 package baseball.service;
 
 
+import baseball.domain.Hint;
+
 import static baseball.constant.GameConst.RANDOM_NUMBER_SIZE;
 
 public class OutputService {
@@ -11,5 +13,9 @@ public class OutputService {
 
     public void printGameWinMessage() {
         System.out.println(RANDOM_NUMBER_SIZE + "개의 숫자를 모두 맞히셨습니다! 게임 종료");
+    }
+
+    public void printHintMessage(Hint hint) {
+        System.out.println(hint.toString());
     }
 }
